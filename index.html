@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RAID Calculator</title>
+    <script>
+        function calculateRAID() {
+            // Get RAID level selection
+            var raidLevel = document.getElementById("raidLevel").value;
+            
+            // Get the number of drives
+            var numDrives = parseInt(document.getElementById("numDrives").value);
+            
+            // Get the drive size in GB
+            var driveSize = parseInt(document.getElementById("driveSize").value);
+            
+            // Calculate usable storage capacity
+            var usableCapacity;
+            
+            switch (raidLevel) {
+                case "0":
+                    usableCapacity = numDrives * driveSize;
+                    break;
+                case "1":
+                    usableCapacity = driveSize;
+                    break;
+                case "5":
+                case "6":
+                case "10":
+                    usableCapacity = (numDrives - 1) * driveSize;
+                    break;
+                default:
+                    usableCapacity = 0;
+                    break;
+            }
+            
+            // Display the result
+            document.getElementById("result").innerHTML = "Usable Storage Capacity: " + usableCapacity + " GB";
+        }
+    </script>
+</head>
+<body>
+    <h1>RAID Calculator</h1>
+    <p>Select RAID Level:</p>
+    <select id="raidLevel">
+        <option value="0">RAID 0</option>
+        <option value="1">RAID 1</option>
+        <option value="5">RAID 5</option>
+        <option value="6">RAID 6</option>
+        <option value="10">RAID 10</option>
+    </select>
+    <p>Number of Drives:</p>
+    <input type="number" id="numDrives" min="2" value="2">
+    <p>Drive Size (GB):</p>
+    <input type="number" id="driveSize" min="1" value="100">
+    <br>
+    <br>
+    <button onclick="calculateRAID()">Calculate</button>
+    <br>
+    <br>
+    <p id="result"></p>
+</body>
+</html>
